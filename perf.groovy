@@ -10,10 +10,11 @@ def newJob = workflowJob('test-workflow') {
     definition {
         cps {
             script("""
-                git url: $gitUrl
+                git url: '$gitUrl'
                 echo 'Hello world'
             """
             )
+            sandbox()
         }
     }
 }
