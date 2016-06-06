@@ -25,7 +25,8 @@ folder('stability_testing') {}
         // Add a parameter to specify which nodes to run the stability job across
         parameters {
             labelParam('NODES_LABEL') {
-                allNodes('allCases', 'AllNodeEligibility', "${osFamily} && performance")
+                allNodes('allCases', 'AllNodeEligibility')
+                defaultValue("${osFamily} && performance")
                 description('Nodes label expression to run the unix stability job across')
             }
         }
@@ -51,7 +52,8 @@ folder('stability_testing') {}
         // Add a parameter to specify which nodes to run the stability job across
         parameters {
             labelParam('NODES_LABEL') {
-                allNodes('allCases', 'AllNodeEligibility', "${osFamily} && performance")
+                allNodes('allCases', 'AllNodeEligibility')
+                defaultValue("${osFamily} && performance")
                 description('Nodes label expression to run the unix stability job across')
             }
         }
