@@ -68,5 +68,5 @@ folder('stability_testing') {}
     }
 
     // Standard job setup, etc.
-    Utilities.standardJobSetup(unixManagedStabilityJob, project, false, "*/${branch}")
+    Utilities.standardJobSetup(managedStabilityJob, project, false, "*/${branch}")
 }
