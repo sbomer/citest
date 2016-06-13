@@ -7,7 +7,7 @@ def branch = GithubBranchName
 
 // Standard build jobs
 
-[true, false].each { isPR ->
+/*[true, false].each { isPR ->
     ['A', 'B', 'C', 'D', 'E', 'F'].each { letter ->
         def newJob = job(Utilities.getFullJobName(project, "innerloop_${letter}", isPR)) {
             steps {
@@ -23,4 +23,4 @@ def branch = GithubBranchName
             Utilities.addGithubPushTrigger(newJob)
         }
     }
-}
+}*/
