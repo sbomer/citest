@@ -70,3 +70,21 @@ folder('stability_testing') {}
     // Standard job setup, etc.
     Utilities.standardJobSetup(managedStabilityJob, project, false, "*/${branch}")
 }
+
+// Create a perf job for roslyn testing
+
+def roslynPerfJob = pipelineJob('rosly_perf_proto') {
+    definition {
+        cpsScm {
+            scm {
+                // Read the script from source control at execution time
+                git(gitUrl)
+                // Load it from the appropriate location
+                scriptPath('roslyn/roslyn-perf-proto.groovy')
+            }
+        }
+    }
+}
+
+// Standard job setup, etc.
+Utilities.standardJobSetup(roslynPerfJob, project, false, "*/${branch}")
