@@ -7,7 +7,7 @@ node ('windows && performance') {
     stage 'Check out sources'
     git url: 'https://github.com/dotnet/roslyn.git'
     stage 'Building roslyn'
-    bat "cibuild.cmd /release /unit64"
+    bat "cibuild.cmd /release /test64"
     stage 'Running performance tests'
-    
+    bat "Binaries\\Release\\Roslyn.Test.Performance.Runner.exe --no-trace-upload"
 }
