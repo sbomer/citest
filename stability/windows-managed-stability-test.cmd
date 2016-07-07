@@ -1,1 +1,0 @@
-echo Running native stability test for %OS%
