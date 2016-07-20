@@ -16,7 +16,7 @@ def branch = GithubBranchName
         Utilities.setMachineAffinity(newJob, 'Windows_NT', 'latest-or-auto')
         Utilities.standardJobSetup(newJob, project, isPR, "*/${branch}")
         if (isPR) {
-            TriggerBuilder builder = new TriggerBuilder.triggerOnPullRequest()
+            TriggerBuilder builder = TriggerBuilder.triggerOnPullRequest()
             builder.setGithubContext("Say Hello${letter}")
             builder.triggerByDefault()
             builder.triggerForBranch('master')
