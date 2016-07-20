@@ -17,7 +17,7 @@ def branch = GithubBranchName
         Utilities.standardJobSetup(newJob, project, isPR, "*/${branch}")
         if (isPR) {
             TriggerBuilder builder = TriggerBuilder.triggerOnPullRequest()
-            builder.setGithubContext("Say Hello${letter}")
+            builder.setGithubContext("Say Hello (dotnet-ci) ${letter}")
             builder.triggerByDefault()
             builder.triggerForBranch('master')
         }
