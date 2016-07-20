@@ -20,6 +20,7 @@ def branch = GithubBranchName
             builder.setGithubContext("Say Hello${letter}")
             builder.triggerByDefault()
             builder.triggerForBranch('master')
+            builder.emitTrigger(newJob)
         }
         else {
             Utilities.addGithubPushTrigger(newJob)
