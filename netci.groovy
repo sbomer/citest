@@ -6,7 +6,7 @@ def project = GithubProject
 def branch = GithubBranchName
 
 [true, false].each { isPR ->
-    ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V'].each { letter ->
+    ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V'].each { letter ->
         def newJob = job(Utilities.getFullJobName(project, "innerloop_${letter}", isPR)) {
             steps {
                 batchFile("build.cmd")
