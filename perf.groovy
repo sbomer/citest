@@ -19,6 +19,7 @@ folder('stability_testing') {}
 // We run two types:
 // 1) Native testing of known binaries (a few parsec benchmarks) that are very stable.
 // 2) Managed testing of known binaries that are stable
+//
 
 ['unix', 'windows'].each { osFamily ->
     def nativeStabilityJob = job(Utilities.getFullJobName("${osFamily}_native_stability_test", false, stabilityTestingFolderName)) {
