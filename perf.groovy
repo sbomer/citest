@@ -32,17 +32,55 @@ folder('stability_testing') {}
         }
         steps {
             if (osFamily == 'windows') {
-                batchFile("stability\\windows-native-stability-test.cmd")
+                batchFile("stability\\windows_native-stability-test.py")
             }
             else {
-                shell("stability/unix-native-stability-test.sh")
+                shell("stability/linux_native-stability-test.py")
             }
         }
     }
 
     // Standard job setup, etc.
     Utilities.standardJobSetup(nativeStabilityJob, project, false, "*/${branch}")
+
+    // Create the workspace cleaner
+    def nativeMachineOfflineJob = job('workspace_cleaner') {
+        publishers {
+            postBuildScripts {
+                logRotator {
+                    daysToKeep(7)
+                }
+
+                logRotator {
+                    daysToKeep(7)
+                }
+
+                scm {
+                    git {
+                        remote {
+                            github('dotnet/dotnet-ci')
+                        }
+                        branch("*/master")
+                    }
+                }
+
+                triggers {
+                    cron('0 0 * * *')
+                }
+
+                steps {
+                    systemGroovyScriptFile('jobs/scripts/workspace_cleaner.groovy')
+                }
+
+                onlyIfBuildSucceeds(false)
+                onlyIfBuildFails()
+            }
+        }
+    }
     
+    // Standard job setup, etc.
+    Utilities.standardJobSetup(nativeMachineOfflineJob, project, false, "*/${branch}")
+
     // Set the cron job here.  We run nightly on each flavor, regardless of code changes
     Utilities.addPeriodicTrigger(nativeStabilityJob, "@daily", true /*always run*/)
     
@@ -69,6 +107,44 @@ folder('stability_testing') {}
 
     // Standard job setup, etc.
     Utilities.standardJobSetup(managedStabilityJob, project, false, "*/${branch}")
+
+    // Create the workspace cleaner
+    def managedMachineOfflineJob = job('workspace_cleaner') {
+        publishers {
+            postBuildScripts {
+                logRotator {
+                    daysToKeep(7)
+                }
+
+                logRotator {
+                    daysToKeep(7)
+                }
+
+                scm {
+                    git {
+                        remote {
+                            github('dotnet/dotnet-ci')
+                        }
+                        branch("*/master")
+                    }
+                }
+
+                triggers {
+                    cron('0 0 * * *')
+                }
+
+                steps {
+                    systemGroovyScriptFile('jobs/scripts/workspace_cleaner.groovy')
+                }
+
+                onlyIfBuildSucceeds(false)
+                onlyIfBuildFails()
+            }
+        }
+    }
+    
+    // Standard job setup, etc.
+    Utilities.standardJobSetup(managedMachineOfflineJob, project, false, "*/${branch}")
 }
 
 // Create a perf job for roslyn testing
