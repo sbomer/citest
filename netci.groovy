@@ -4,14 +4,31 @@ import jobs.generation.*;
 
 def project = GithubProject
 def branch = GithubBranchName
+def projectFolder = Utilities.getFolderName(project) + '/' + Utilities.getFolderName(branch)
 
-[true, false].each { isPR ->
-    ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V'].each { letter ->
+[false].each { isPR ->
+    ['A'].each { letter ->
+        def upstreamJob = buildFlowJob(Utilities.getFullJobName(project, "innerloop_${letter}_flow", isPR)) {
+            def downstreamJobName = projectFolder + '/' + Utilities.getFullJobName(project, "innerloop_${letter}", isPR)
+            buildFlow("build($downstreamJobName)")
+        }
         def newJob = job(Utilities.getFullJobName(project, "innerloop_${letter}", isPR)) {
             steps {
-                batchFile("build.cmd")
+                batchFile("echo https://www.google.com > links1.txt")
+                batchFile("echo https://www.github.com >> links1.txt")
+                batchFile("echo https://www.microsoft.com >> links1.txt")
+                
+                batchFile("echo https://www.bing.com > links2.txt")
+                batchFile("echo https://www.reddit.com >> links2.txt")
+                batchFile("echo https://www.facebook.com >> links2.txt")
             }
         }
+        
+        // Emit summaries
+        SummaryBuilder summaries = new SummaryBuilder()
+        summaries.addLinksSummaryFromFile('Crash dumps from this run', 'links1.txt')
+        summaries.addLinksSummaryFromFile('Other dumps from this run', 'links2.txt')
+        summaries.emit(newJob)
         
         Utilities.setMachineAffinity(newJob, 'Windows_NT', 'latest-or-auto')
         Utilities.standardJobSetup(newJob, project, isPR, "*/${branch}")
