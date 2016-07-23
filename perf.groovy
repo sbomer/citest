@@ -106,7 +106,7 @@ folder('stability_testing') {}
                         extendedEmail {
                             recipientList('xiwe@microsoft.com')
                             defaultSubject('Stability test fails and the machine is taken offline')
-                            contentType('text')
+                            contentType('text/html')
                         }
                     }
                 }
