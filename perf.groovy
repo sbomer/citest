@@ -43,7 +43,7 @@ folder('stability_testing') {}
     // Standard job setup, etc.
     Utilities.standardJobSetup(nativeStabilityJob, project, false, "*/${branch}")
 
-    job('take_machine_offline') {
+    job('take_machine_offline_upon_native_failure') {
         publishers {
             flexiblePublish {
                 conditionalAction {
@@ -85,7 +85,7 @@ folder('stability_testing') {}
     // Standard job setup, etc.
     Utilities.standardJobSetup(managedStabilityJob, project, false, "*/${branch}")
 
-    job('take_machine_offline') {
+    job('take_machine_offline_upon_managed_failure') {
         publishers {
             flexiblePublish {
                 conditionalAction {
