@@ -32,7 +32,9 @@ folder('stability_testing') {}
         }
         steps {
             if (osFamily == 'windows') {
-                batchFile("stability\\windows_native-stability-test.py")
+                python {
+                    command('python stability\\windows_native-stability-test.py')
+                }
             }
             else {
                 shell("stability/linux_native-stability-test.py")
