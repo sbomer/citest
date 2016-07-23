@@ -81,10 +81,12 @@ folder('stability_testing') {}
         }
         steps {
             if (osFamily == 'windows') {
-                batchFile("stability\\windows-managed-stability-test.cmd")
+                python {
+                    command('python stability\\windows_native-stability-test.py')
+                }
             }
             else {
-                shell("stability/unix-managed-stability-test.sh")
+                shell("stability/linux_native-stability-test.py")
             }
         }
     }
