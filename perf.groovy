@@ -43,44 +43,21 @@ folder('stability_testing') {}
     // Standard job setup, etc.
     Utilities.standardJobSetup(nativeStabilityJob, project, false, "*/${branch}")
 
-    // Create the workspace cleaner
-    def nativeMachineOfflineJob = job('workspace_cleaner') {
+    job('take_machine_offline') {
         publishers {
-            postBuildScripts {
-                logRotator {
-                    daysToKeep(7)
-                }
-
-                logRotator {
-                    daysToKeep(7)
-                }
-
-                scm {
-                    git {
-                        remote {
-                            github('dotnet/dotnet-ci')
-                        }
-                        branch("*/master")
+            flexiblePublish {
+                conditionalAction {
+                    condition {
+                        status('ABORTED', 'FAILURE')
+                    }
+                    steps {
+                        systemGroovyScriptFile('jobs/scripts/take_offline.groovy')
                     }
                 }
-
-                triggers {
-                    cron('0 0 * * *')
-                }
-
-                steps {
-                    systemGroovyScriptFile('jobs/scripts/workspace_cleaner.groovy')
-                }
-
-                onlyIfBuildSucceeds(false)
-                onlyIfBuildFails()
             }
         }
     }
     
-    // Standard job setup, etc.
-    Utilities.standardJobSetup(nativeMachineOfflineJob, project, false, "*/${branch}")
-
     // Set the cron job here.  We run nightly on each flavor, regardless of code changes
     Utilities.addPeriodicTrigger(nativeStabilityJob, "@daily", true /*always run*/)
     
@@ -108,43 +85,20 @@ folder('stability_testing') {}
     // Standard job setup, etc.
     Utilities.standardJobSetup(managedStabilityJob, project, false, "*/${branch}")
 
-    // Create the workspace cleaner
-    def managedMachineOfflineJob = job('workspace_cleaner') {
+    job('take_machine_offline') {
         publishers {
-            postBuildScripts {
-                logRotator {
-                    daysToKeep(7)
-                }
-
-                logRotator {
-                    daysToKeep(7)
-                }
-
-                scm {
-                    git {
-                        remote {
-                            github('dotnet/dotnet-ci')
-                        }
-                        branch("*/master")
+            flexiblePublish {
+                conditionalAction {
+                    condition {
+                        status('ABORTED', 'FAILURE')
+                    }
+                    steps {
+                        systemGroovyScriptFile('jobs/scripts/take_offline.groovy')
                     }
                 }
-
-                triggers {
-                    cron('0 0 * * *')
-                }
-
-                steps {
-                    systemGroovyScriptFile('jobs/scripts/workspace_cleaner.groovy')
-                }
-
-                onlyIfBuildSucceeds(false)
-                onlyIfBuildFails()
             }
         }
     }
-    
-    // Standard job setup, etc.
-    Utilities.standardJobSetup(managedMachineOfflineJob, project, false, "*/${branch}")
 }
 
 // Create a perf job for roslyn testing
