@@ -33,7 +33,7 @@ folder('stability_testing') {}
         steps {
             if (osFamily == 'windows') {
                 batchFile('echo %PATH%')
-                batchFile(readFileFromWorkspace('runPythonOnWindows.bat'))
+                batchFile('runPythonOnWindows.bat')
             }
             else {
                 shell("stability/linux_native-stability-test.py")
@@ -83,7 +83,7 @@ folder('stability_testing') {}
         steps {
             if (osFamily == 'windows') {
                 batchFile('echo %PATH%')
-                batchFile(readFileFromWorkspace('runPythonOnWindows.bat'))
+                batchFile('runPythonOnWindows.bat')
             }
             else {
                 shell("stability/linux_native-stability-test.py")
