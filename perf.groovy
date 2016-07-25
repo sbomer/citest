@@ -32,6 +32,8 @@ folder('stability_testing') {}
         }
         steps {
             if (osFamily == 'windows') {
+                batchFile("where python")
+                pythonName('System-CPython-2.7')
                 python {
                     command('python stability\\windows_native-stability-test.py')
                 }
