@@ -32,11 +32,8 @@ folder('stability_testing') {}
         }
         steps {
             if (osFamily == 'windows') {
-                batchFile("where python")
-                pythonName('System-CPython-2.7')
-                python {
-                    command('python stability\\windows_native-stability-test.py')
-                }
+                execCommand('echo %PATH%')
+                execCommand('python stability\\windows_native-stability-test.py')
             }
             else {
                 shell("stability/linux_native-stability-test.py")
@@ -85,9 +82,8 @@ folder('stability_testing') {}
         }
         steps {
             if (osFamily == 'windows') {
-                python {
-                    command('python stability\\windows_native-stability-test.py')
-                }
+                execCommand('echo %PATH%')
+                execCommand('python stability\\windows_native-stability-test.py')
             }
             else {
                 shell("stability/linux_native-stability-test.py")
