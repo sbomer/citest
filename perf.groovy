@@ -32,7 +32,6 @@ folder('stability_testing') {}
         }
         steps {
             if (osFamily == 'windows') {
-                execCommand('echo %PATH%')
                 execCommand('python stability\\windows_native-stability-test.py')
             }
             else {
@@ -82,7 +81,6 @@ folder('stability_testing') {}
         }
         steps {
             if (osFamily == 'windows') {
-                execCommand('echo %PATH%')
                 execCommand('python stability\\windows_native-stability-test.py')
             }
             else {
