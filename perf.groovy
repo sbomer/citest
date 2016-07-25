@@ -32,7 +32,6 @@ folder('stability_testing') {}
         }
         steps {
             if (osFamily == 'windows') {
-                batchFile('echo %PATH%')
                 batchFile('runPythonOnWindows.bat')
             }
             else {
@@ -82,7 +81,6 @@ folder('stability_testing') {}
         }
         steps {
             if (osFamily == 'windows') {
-                batchFile('echo %PATH%')
                 batchFile('runPythonOnWindows.bat')
             }
             else {
