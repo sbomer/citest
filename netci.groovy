@@ -10,7 +10,7 @@ def projectFolder = Utilities.getFolderName(project) + '/' + Utilities.getFolder
     ['A'].each { letter ->
         def upstreamJob = buildFlowJob(Utilities.getFullJobName(project, "innerloop_${letter}_flow", isPR)) {
             def downstreamJobName = projectFolder + '/' + Utilities.getFullJobName(project, "innerloop_${letter}", isPR)
-            buildFlow("build($downstreamJobName)")
+            buildFlow("build('$downstreamJobName')")
         }
         def newJob = job(Utilities.getFullJobName(project, "innerloop_${letter}", isPR)) {
             steps {
