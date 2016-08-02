@@ -28,6 +28,7 @@ def projectFolder = Utilities.getFolderName(project) + '/' + Utilities.getFolder
         SummaryBuilder summaries = new SummaryBuilder()
         summaries.addLinksSummaryFromFile('Crash dumps from this run', 'links1.txt')
         summaries.addLinksSummaryFromFile('Other dumps from this run', 'links2.txt')
+        summaries.addSummaryLinks('Static summary links', ['www.dotnet-ci.cloudapp.net', 'www.dotnet-ci.cloudapp.net/$BUILD_NUMBER'])
         summaries.emit(newJob)
         
         Utilities.setMachineAffinity(newJob, 'Windows_NT', 'latest-or-auto')
