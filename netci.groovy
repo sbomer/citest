@@ -6,7 +6,7 @@ def project = GithubProject
 def branch = GithubBranchName
 def projectFolder = Utilities.getFolderName(project) + '/' + Utilities.getFolderName(branch)
 
-[false].each { isPR ->
+[true].each { isPR ->
     ['A'].each { letter ->
         def upstreamJob = buildFlowJob(Utilities.getFullJobName(project, "innerloop_${letter}_flow", isPR)) {
             def downstreamJobName = projectFolder + '/' + Utilities.getFullJobName(project, "innerloop_${letter}", isPR)
@@ -48,7 +48,7 @@ def projectFolder = Utilities.getFolderName(project) + '/' + Utilities.getFolder
         archivalBuilder.addFiles('links1.txt')
         archivalBuilder.addFiles('links2.txt')
         archivalBuilder.setAlwaysArchive()
-        // archivalBuilder.setUseAzureStorage()
+        archivalBuilder.setUseAzureStorage()
         archivalBuilder.emitArchival(newJob)
     }
 }
