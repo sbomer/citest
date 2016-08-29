@@ -48,7 +48,7 @@ def projectFolder = Utilities.getFolderName(project) + '/' + Utilities.getFolder
         archivalBuilder.addFiles('links1.txt')
         archivalBuilder.addFiles('links2.txt')
         archivalBuilder.setAlwaysArchive()
-        archivalBuilder.setUseAzureStorage()
+        // archivalBuilder.setUseAzureStorage()
         archivalBuilder.emitArchival(newJob)
     }
 }
