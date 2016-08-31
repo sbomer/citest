@@ -43,4 +43,4 @@ def projectFolder = Utilities.getFolderName(project) + '/' + Utilities.getFolder
 }
 
 // Make the call to generate the help job
-Utilities.createHelperJob(this, project, branch, 'Welcome to the CITest Repository')
+Utilities.createHelperJob(this, project, branch, 'Welcome to the CITest Repository', "No known issues in CITest repository")
