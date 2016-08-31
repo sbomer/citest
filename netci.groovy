@@ -43,13 +43,6 @@ def projectFolder = Utilities.getFolderName(project) + '/' + Utilities.getFolder
         else {
             Utilities.addGithubPushTrigger(newJob)
         }
-        
-        ArchivalBuilder archivalBuilder = new ArchivalBuilder()
-        archivalBuilder.addFiles('links1.txt')
-        archivalBuilder.addFiles('links2.txt')
-        archivalBuilder.setAlwaysArchive()
-        archivalBuilder.setUseAzureStorage()
-        archivalBuilder.emitArchival(newJob)
     }
 }
 
