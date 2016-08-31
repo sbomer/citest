@@ -6,7 +6,7 @@ def project = GithubProject
 def branch = GithubBranchName
 def projectFolder = Utilities.getFolderName(project) + '/' + Utilities.getFolderName(branch)
 
-[true].each { isPR ->
+[true,false].each { isPR ->
     ['A'].each { letter ->
         def upstreamJob = buildFlowJob(Utilities.getFullJobName(project, "innerloop_${letter}_flow", isPR)) {
             def downstreamJobName = projectFolder + '/' + Utilities.getFullJobName(project, "innerloop_${letter}", isPR)
@@ -44,17 +44,11 @@ def projectFolder = Utilities.getFolderName(project) + '/' + Utilities.getFolder
             Utilities.addGithubPushTrigger(newJob)
         }
         
-        /*ArchivalBuilder archivalBuilder = new ArchivalBuilder()
+        ArchivalBuilder archivalBuilder = new ArchivalBuilder()
         archivalBuilder.addFiles('links1.txt')
         archivalBuilder.addFiles('links2.txt')
         archivalBuilder.setAlwaysArchive()
         archivalBuilder.setUseAzureStorage()
-        archivalBuilder.emitArchival(newJob)*/
-        
-        ArchivalSettings archivalSettings = new ArchivalSettings()
-        archivalSettings.addFiles('links1.txt')
-        archivalSettings.addFiles('links2.txt')
-        archivalSettings.setAlwaysArchive()
-        Utilities.addAzureArchival(newJob, 'dotnetcidata', archivalSettings)
+        archivalBuilder.emitArchival(newJob)
     }
 }
