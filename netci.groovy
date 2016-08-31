@@ -52,3 +52,6 @@ def projectFolder = Utilities.getFolderName(project) + '/' + Utilities.getFolder
         archivalBuilder.emitArchival(newJob)
     }
 }
+
+// Make the call to generate the help job
+Utilities.createHelperJob(this, branch, 'Welcome to the CITest Repository')
