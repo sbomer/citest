@@ -8,10 +8,6 @@ def projectFolder = Utilities.getFolderName(project) + '/' + Utilities.getFolder
 
 [true,false].each { isPR ->
     ['A'].each { letter ->
-        def upstreamJob = buildFlowJob(Utilities.getFullJobName(project, "innerloop_${letter}_flow", isPR)) {
-            def downstreamJobName = projectFolder + '/' + Utilities.getFullJobName(project, "innerloop_${letter}", isPR)
-            buildFlow("build('$downstreamJobName')")
-        }
         def newJob = job(Utilities.getFullJobName(project, "innerloop_${letter}", isPR)) {
             steps {
                 batchFile("echo https://www.google.com > links1.txt")
@@ -47,4 +43,4 @@ def projectFolder = Utilities.getFolderName(project) + '/' + Utilities.getFolder
 }
 
 // Make the call to generate the help job
-Utilities.createHelperJob(this, branch, 'Welcome to the CITest Repository')
+Utilities.createHelperJob(this, project, branch, 'Welcome to the CITest Repository')
