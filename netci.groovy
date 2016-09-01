@@ -32,7 +32,7 @@ def projectFolder = Utilities.getFolderName(project) + '/' + Utilities.getFolder
         if (isPR) {
             TriggerBuilder builder = TriggerBuilder.triggerOnPullRequest()
             builder.setGithubContext("Say Hello (dotnet-ci2) ${letter}")
-            builder.triggerByDefault()
+            builder.triggerOnlyOnComment()
             builder.triggerForBranch(branch)
             builder.emitTrigger(newJob)
         }
