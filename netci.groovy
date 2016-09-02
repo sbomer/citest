@@ -8,10 +8,6 @@ def projectFolder = Utilities.getFolderName(project) + '/' + Utilities.getFolder
 
 [true,false].each { isPR ->
     ['A'].each { letter ->
-        def upstreamJob = buildFlowJob(Utilities.getFullJobName(project, "innerloop_${letter}_flow", isPR)) {
-            def downstreamJobName = projectFolder + '/' + Utilities.getFullJobName(project, "innerloop_${letter}", isPR)
-            buildFlow("build('$downstreamJobName')")
-        }
         def newJob = job(Utilities.getFullJobName(project, "innerloop_${letter}", isPR)) {
             steps {
                 batchFile("echo https://www.google.com > links1.txt")
@@ -35,20 +31,16 @@ def projectFolder = Utilities.getFolderName(project) + '/' + Utilities.getFolder
         Utilities.standardJobSetup(newJob, project, isPR, "*/${branch}")
         if (isPR) {
             TriggerBuilder builder = TriggerBuilder.triggerOnPullRequest()
-            builder.setGithubContext("Say Hello (dotnet-ci2) ${letter}")
-            builder.triggerByDefault()
-            builder.triggerForBranch('master')
+            builder.setGithubContext("Say Hello ${letter}")
+            builder.triggerOnlyOnComment()
+            builder.triggerForBranch(branch)
             builder.emitTrigger(newJob)
         }
         else {
             Utilities.addGithubPushTrigger(newJob)
         }
-        
-        ArchivalBuilder archivalBuilder = new ArchivalBuilder()
-        archivalBuilder.addFiles('links1.txt')
-        archivalBuilder.addFiles('links2.txt')
-        archivalBuilder.setAlwaysArchive()
-        archivalBuilder.setUseAzureStorage()
-        archivalBuilder.emitArchival(newJob)
     }
 }
+
+// Make the call to generate the help job
+Utilities.createHelperJob(this, project, branch, 'Welcome to the CITest Repository', "No known issues in CITest repository")
