@@ -31,7 +31,7 @@ def projectFolder = Utilities.getFolderName(project) + '/' + Utilities.getFolder
         Utilities.standardJobSetup(newJob, project, isPR, "*/${branch}")
         if (isPR) {
             TriggerBuilder builder = TriggerBuilder.triggerOnPullRequest()
-            builder.setGithubContext("Say Hello (dotnet-ci2) ${letter}")
+            builder.setGithubContext("Say Hello ${letter}")
             builder.triggerOnlyOnComment()
             builder.triggerForBranch(branch)
             builder.emitTrigger(newJob)
