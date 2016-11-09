@@ -2,4 +2,4 @@
 some changes
 some more changes
 ...and again
-testing quiet period
+testing quiet<merge conflict>period
